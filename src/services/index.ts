@@ -1,1 +1,2 @@
-export { MegaverseAPI } from "./megaverse";
+export { MegaverseAPI } from "./MegaverseApi";
+export { MapGenerator } from "./MapGenerator";

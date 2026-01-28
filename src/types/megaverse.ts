@@ -81,3 +81,30 @@ export interface MegaverseApiConfig {
 	retryCount?: number;
 	retryDelay?: number;
 }
+
+/**
+ * Possible cell values in the goal map
+ */
+export type GoalMapCell =
+	| "SPACE"
+	| "POLYANET"
+	| "BLUE_SOLOON"
+	| "RED_SOLOON"
+	| "PURPLE_SOLOON"
+	| "WHITE_SOLOON"
+	| "UP_COMETH"
+	| "DOWN_COMETH"
+	| "LEFT_COMETH"
+	| "RIGHT_COMETH";
+
+/**
+ * The goal map is a 2D array of cell values
+ */
+export type GoalMap = GoalMapCell[][];
+
+/**
+ * Response from the /map/{candidateId}/goal endpoint
+ */
+export interface GoalMapResponse {
+	goal: GoalMap;
+}

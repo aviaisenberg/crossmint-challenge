@@ -8,6 +8,8 @@ import {
 	ComethResponse,
 	DeleteResponse,
 	ApiErrorResponse,
+	GoalMap,
+	GoalMapResponse,
 } from "../types/megaverse";
 
 import {
@@ -153,10 +155,19 @@ export class MegaverseAPI {
 		return response;
 	}
 
+	public async getGoalMap(): Promise<GoalMap> {
+		const response = await this.makeRequest<GoalMapResponse>(
+			`/map/${this.candidateId}/goal`,
+			"GET",
+		);
+
+		return response.goal;
+	}
+
 	private async makeRequest<T>(
 		endpoint: string,
-		method: "POST" | "DELETE",
-		body: Record<string, unknown>,
+		method: "POST" | "DELETE" | "GET",
+		body?: Record<string, unknown>,
 	): Promise<T> {
 		const url = `${this.baseUrl}${endpoint}`;
 		let lastError: Error | null = null;
@@ -175,7 +186,7 @@ export class MegaverseAPI {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(body),
+					body: method !== "GET" ? JSON.stringify(body) : undefined,
 					signal: controller.signal,
 				});
 

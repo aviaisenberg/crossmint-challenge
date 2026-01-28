@@ -1,9 +1,9 @@
 import { MegaverseAPI } from "./MegaverseApi";
-import { ComethDirection, SoloonColor } from "../types";
-import { goalMap } from "../data";
+import { ComethDirection, GoalMap, SoloonColor } from "../types";
 
 export class MapGenerator {
 	private megaverseAPI: MegaverseAPI;
+
 	constructor(megaverseAPI: MegaverseAPI) {
 		this.megaverseAPI = megaverseAPI;
 	}
@@ -19,7 +19,18 @@ export class MapGenerator {
 		return coords;
 	}
 
-	public async generateGoalMap() {
+	/**
+	 * Fetches the goal map from the API and generates all astral objects
+	 * to match the target configuration
+	 */
+	public async generateGoalMap(): Promise<void> {
+		// Fetch the goal map from the API
+		console.log("Fetching goal map from API...");
+		const goalMap: GoalMap = await this.megaverseAPI.getGoalMap();
+		console.log(
+			`Goal map fetched: ${goalMap.length}x${goalMap[0]?.length || 0} grid`,
+		);
+
 		// Traverse the map and invoke the correct API method for each element
 		for (let row = 0; row < goalMap.length; row++) {
 			for (let column = 0; column < goalMap[row].length; column++) {

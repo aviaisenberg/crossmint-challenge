@@ -10,30 +10,29 @@ The Megaverse is a 2D space that can be populated with three types of astral obj
 - **Soloons** - Colored moons that orbit Polyanets (blue, red, purple, or white)
 - **Comeths** - Comets with directional trails (up, down, left, or right)
 
+The application fetches the target goal map from the API and automatically creates all the required astral objects to match the configuration.
+
 ## Project Structure
 
 ```
 megaverse/
 ├── src/
 │   ├── config/
-│   │   └── env.ts           # Environment configuration
-│   ├── data/
-│   │   ├── goalMap.ts       # Target map configuration
-│   │   └── index.ts
+│   │   └── env.ts              # Environment configuration
 │   ├── errors/
 │   │   ├── megaverse-error.ts  # Custom error classes
 │   │   └── index.ts
 │   ├── services/
-│   │   ├── MegaverseApi.ts  # API client for Megaverse endpoints
-│   │   ├── MapGenerator.ts  # Map generation logic
+│   │   ├── MegaverseApi.ts     # API client for Megaverse endpoints
+│   │   ├── MapGenerator.ts     # Map generation logic
 │   │   └── index.ts
 │   ├── types/
-│   │   ├── megaverse.ts     # TypeScript interfaces and types
+│   │   ├── megaverse.ts        # TypeScript interfaces and types
 │   │   └── index.ts
-│   └── index.ts             # Application entry point
-├── .env                     # Environment variables (not in git)
-├── .env.example             # Example environment file
-├── nodemon.json             # Nodemon configuration
+│   └── index.ts                # Application entry point
+├── .env                        # Environment variables (not in git)
+├── .env.example                # Example environment file
+├── nodemon.json                # Nodemon configuration
 ├── package.json
 └── tsconfig.json
 ```
@@ -76,7 +75,7 @@ megaverse/
 
 ### Generate the Goal Map
 
-Run the application to generate the complete goal map:
+Run the application to fetch the goal map from the API and generate all astral objects:
 
 ```bash
 npm run dev
@@ -104,6 +103,9 @@ const api = new MegaverseAPI({
 	retryDelay: 1000,
 });
 
+// Fetch the goal map
+const goalMap = await api.getGoalMap();
+
 // Create a Polyanet
 await api.createPolyanet({ row: 0, column: 0 });
 
@@ -119,8 +121,21 @@ await api.deleteSoloon({ row: 1, column: 1 });
 await api.deleteCometh({ row: 2, column: 2 });
 ```
 
+### API Methods
+
+| Method                              | Description                                   |
+| ----------------------------------- | --------------------------------------------- |
+| `getGoalMap()`                      | Fetches the target goal map for the candidate |
+| `createPolyanet(position)`          | Creates a Polyanet at the specified position  |
+| `deletePolyanet(position)`          | Deletes a Polyanet at the specified position  |
+| `createSoloon(position, color)`     | Creates a Soloon with the specified color     |
+| `deleteSoloon(position)`            | Deletes a Soloon at the specified position    |
+| `createCometh(position, direction)` | Creates a Cometh with the specified direction |
+| `deleteCometh(position)`            | Deletes a Cometh at the specified position    |
+
 ### Features
 
+- **Dynamic Goal Map** - Fetches the target map configuration from the API
 - **Automatic Retry** - Configurable retry count with exponential backoff
 - **Rate Limit Handling** - Respects `Retry-After` headers
 - **Type Safety** - Full TypeScript support with interfaces for all requests/responses

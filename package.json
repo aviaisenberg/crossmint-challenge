@@ -1,0 +1,25 @@
+{
+	"name": "megaverse",
+	"version": "1.0.0",
+	"description": "Megaverse TypeScript Project",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"dev": "nodemon",
+		"lint": "eslint src/**/*.ts",
+		"clean": "rm -rf dist"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^20.10.0",
+		"nodemon": "^3.0.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"dotenv": "^16.3.1"
+	}
+}
